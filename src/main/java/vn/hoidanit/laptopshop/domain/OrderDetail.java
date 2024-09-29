@@ -11,16 +11,19 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "order_detail")
 public class OrderDetail {
-       @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private long quantity;
     private double price;
 
-     @ManyToOne
+    // order_id: long
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
+    // product_id: long
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -49,16 +52,20 @@ public class OrderDetail {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("OrderDetail{");
-        sb.append("id=").append(id);
-        sb.append(", quantity=").append(quantity);
-        sb.append(", price=").append(price);
-        sb.append('}');
-        return sb.toString();
+    public Order getOrder() {
+        return order;
     }
 
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
 }

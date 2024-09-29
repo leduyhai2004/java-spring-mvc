@@ -11,31 +11,30 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String email;
+
     private String password;
     private String fullName;
     private String address;
     private String phone;
+
     private String avatar;
 
-    @OneToMany(mappedBy="user")
-    private List<Order> orders;
+    // roleId
+    // User many -> to one -> role
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
+    @OneToMany(mappedBy = "user")
+    List<Order> orders;
 
     public Role getRole() {
         return role;
@@ -45,56 +44,60 @@ public class User {
         this.role = role;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
-    public void setId(long id) {
-        this.id = id;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getFullName() {
         return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getAddress() {
         return address;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getPhone() {
         return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getAvatar() {
@@ -110,7 +113,5 @@ public class User {
         return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
                 + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
     }
-
-    
 
 }
