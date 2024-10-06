@@ -1,9 +1,11 @@
 package vn.hoidanit.laptopshop.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 import vn.hoidanit.laptopshop.domain.User;
-import java.util.List;
 
 //crud: create, read, update, delete
 @Repository
@@ -12,9 +14,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     void deleteById(long id);
 
-    List<User> findOneByEmail(String email);
+    List<User> findOneByEmail(String email); // cai nay tra ve List nen minh co the gioi han bang cach them one
 
     List<User> findAll();
 
     User findById(long id); // null
+
+    boolean existsByEmail(String email);
+
+    User findByEmail(String email);
 }

@@ -10,7 +10,7 @@
                 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
                 <meta name="description" content="Hỏi Dân IT - Dự án laptopshop" />
                 <meta name="author" content="Hỏi Dân IT" />
-                <title>Detail User - Hỏi Dân IT</title>
+                <title>Detail User - User</title>
                 <link href="/css/styles.css" rel="stylesheet" />
 
                 <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -37,16 +37,25 @@
 
                                             <hr />
 
-                                            <div class="card" style="width: 60%">
-                                                <div class="card-header">
-                                                    User information
+                                            <div>
+                                                <div class="card" style="width: 60%">
+                                                    <div class="card-header">
+                                                        User information
+                                                    </div>
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">ID: ${user.id}</li>
+                                                        <li class="list-group-item">Email: ${user.email}</li>
+                                                        <li class="list-group-item">FullName: ${user.fullName}</li>
+                                                        <li class="list-group-item">Address: ${user.address}</li>
+                                                    </ul>
                                                 </div>
-                                                <ul class="list-group list-group-flush">
-                                                    <li class="list-group-item">ID: ${user.id}</li>
-                                                    <li class="list-group-item">Email: ${user.email}</li>
-                                                    <li class="list-group-item">FullName: ${user.fullName}</li>
-                                                    <li class="list-group-item">Address: ${user.address}</li>
-                                                </ul>
+                                            </div>
+                                            <div>
+                                                Avatar:
+                                            </div>
+                                            <div class="containImg" style="width: 30%">
+                                                <img class="card-img-top" src="/images/avatar/${user.avatar}"
+                                                    alt="Card image cap">
                                             </div>
                                             <a href="/admin/user" class="btn btn-success mt-3">Back</a>
 
