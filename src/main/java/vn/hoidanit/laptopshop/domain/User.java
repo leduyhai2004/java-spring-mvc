@@ -9,10 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -46,6 +47,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     List<Order> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+    
 
     public Role getRole() {
         return role;
@@ -118,11 +123,34 @@ public class User {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+    
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", email=" + email + ", password=" + password + ", fullName=" + fullName
-                + ", address=" + address + ", phone=" + phone + ", avatar=" + avatar + "]";
+        StringBuilder sb = new StringBuilder();
+        sb.append("User{");
+        sb.append("id=").append(id);
+        sb.append(", email=").append(email);
+        sb.append(", password=").append(password);
+        sb.append(", fullName=").append(fullName);
+        sb.append(", address=").append(address);
+        sb.append(", phone=").append(phone);
+        sb.append(", avatar=").append(avatar);
+        sb.append(", role=").append(role);
+        sb.append(", orders=").append(orders);
+        sb.append(", cart=").append(cart);
+        sb.append('}');
+        return sb.toString();
     }
+
+
 
 }

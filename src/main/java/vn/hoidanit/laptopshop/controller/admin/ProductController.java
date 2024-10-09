@@ -1,6 +1,7 @@
 package vn.hoidanit.laptopshop.controller.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,12 +64,13 @@ public class ProductController {
 
         return "redirect:/admin/product";
     }
-        @GetMapping("/admin/product/update/{id}") // GET
-        public String getUpdateProductPage(Model model, @PathVariable long id) {
-        Product currentProduct = this.productService.getProductById(id);
-        model.addAttribute("newProduct", currentProduct);
+    @GetMapping("/admin/product/update/{id}")
+    public String getUpdateProductPage(Model model, @PathVariable long id) {
+        Optional<Product> currentProduct = this.productService.fetchProductById(id);
+        model.addAttribute("newProduct", currentProduct.get());
         return "admin/product/update";
     }
+
 
     @PostMapping("/admin/product/update")
     public String handleUpdateProduct(Model model, @ModelAttribute("newProduct") Product pr,
@@ -79,7 +81,7 @@ public class ProductController {
             return "admin/product/update";
         }
 
-        Product currentProduct = this.productService.getProductById(pr.getId());
+        Product currentProduct = this.productService.fetchProductById(pr.getId()).get();
         if (currentProduct != null) {
             // update new image
             if (!file.isEmpty()) {
@@ -115,7 +117,7 @@ public class ProductController {
 
     @GetMapping("/admin/product/{id}")
     public String getProductDetailPage(Model model, @PathVariable long id) {
-        Product pr = this.productService.getProductById(id);
+        Product pr = this.productService.fetchProductById(id).get();
         model.addAttribute("product", pr);
         model.addAttribute("id", id);
         return "admin/product/detail";
