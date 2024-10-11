@@ -26,74 +26,75 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-     @Bean 
-    public UserDetailsService userDetailsService(UserService userService) { 
-        return new CustomUserDetailsService(userService); 
-    } 
- 
-    // day la method tong hop tat ca cac hoat dong cua security    
-      @Bean 
-    public DaoAuthenticationProvider authProvider( 
-            PasswordEncoder passwordEncoder, 
-            UserDetailsService userDetailsService) { 
- 
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(); 
-        authProvider.setUserDetailsService(userDetailsService); 
-        authProvider.setPasswordEncoder(passwordEncoder); 
-        authProvider.setHideUserNotFoundExceptions(false); 
-        return authProvider; 
+    @Bean
+    public UserDetailsService userDetailsService(UserService userService) {
+        return new CustomUserDetailsService(userService);
+    }
+
+    // day la method tong hop tat ca cac hoat dong cua security
+    @Bean
+    public DaoAuthenticationProvider authProvider(
+            PasswordEncoder passwordEncoder,
+            UserDetailsService userDetailsService) {
+
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        authProvider.setHideUserNotFoundExceptions(false);
+        return authProvider;
     }
 
     @Bean
-    public AuthenticationSuccessHandler customSuccessHandler(){
+    public AuthenticationSuccessHandler customSuccessHandler() {
         return new CustomSuccessHandler();
     }
 
     @Bean
     public SpringSessionRememberMeServices rememberMeServices() {
-            SpringSessionRememberMeServices rememberMeServices =
-                    new SpringSessionRememberMeServices();
-            // optionally customize
-            rememberMeServices.setAlwaysRemember(true);
-            return rememberMeServices;
+        SpringSessionRememberMeServices rememberMeServices = new SpringSessionRememberMeServices();
+        // optionally customize
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
     }
 
+    // v6. lamda
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorize -> authorize
+                        .dispatcherTypeMatchers(DispatcherType.FORWARD,
+                                DispatcherType.INCLUDE)
+                        .permitAll()
+                        .requestMatchers("/", "/login", "/register", "/product/**", "/client/**", "/css/**", "/js/**",
+                                "/images/**")
+                        .permitAll()
 
-    //v6. lamda
-    @Bean 
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception { 
-        http 
-                .authorizeHttpRequests(authorize -> authorize 
-                .dispatcherTypeMatchers(DispatcherType.FORWARD, 
-                DispatcherType.INCLUDE) .permitAll()
-                .requestMatchers("/","/login","/product/**", "/client/**", "/css/**", "/js/**", 
-                "/images/**")
-                .permitAll()
+                        .requestMatchers("/admin/**")
+                        .hasRole("ADMIN")
 
-                .requestMatchers("/admin/**")
-                .hasRole("ADMIN")
-
-                .anyRequest().authenticated()) 
+                        .anyRequest().authenticated())
 
                 .sessionManagement((sessionManagement) -> sessionManagement
-                    .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-                    .invalidSessionUrl("/logout?expired")
-                    .maximumSessions(1) // m đang dùng tk thì người khác kh đăng nhập tk đc nữa
-                    .maxSessionsPreventsLogin(false)) // người đăng nhập vào sẽ đá người đăng nhập trước đó ra
+                        .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                        .invalidSessionUrl("/logout?expired")
+                        .maximumSessions(1) // m đang dùng tk thì người khác kh đăng nhập tk đc nữa
+                        .maxSessionsPreventsLogin(false)) // người đăng nhập vào sẽ đá người đăng nhập trước đó ra
 
                 .logout(logout -> logout.deleteCookies("JSESSIONID").invalidateHttpSession(true))
-                // khi mà logout ra thì sẽ xóa bỏ cookies và thông báo với server là cái session đó đã hết hạn
+                // khi mà logout ra thì sẽ xóa bỏ cookies và thông báo với server là cái session
+                // đó đã hết hạn
                 .rememberMe(r -> r.rememberMeServices(rememberMeServices()))
 
-                //bay h cai login cua t thi m se vao cai url nay, neu fail thi nha ra error cho t
-                .formLogin(formLogin -> formLogin 
-                        .loginPage("/login") 
-                        .failureUrl("/login?error") 
+                // bay h cai login cua t thi m se vao cai url nay, neu fail thi nha ra error cho
+                // t
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .failureUrl("/login?error")
                         .successHandler(customSuccessHandler())
                         .permitAll())
-                    .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny")); 
- 
-        return http.build(); 
+                .exceptionHandling(ex -> ex.accessDeniedPage("/access-deny"));
+
+        return http.build();
     }
 
 }
