@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import vn.hoidanit.laptopshop.service.UserService;
 
 @Controller
-public class DashboardController {
+public class DashBoardController {
     private final UserService userService;
-    public DashboardController(UserService userService){
+    public DashBoardController(UserService userService){
         this.userService = userService;
     }
 
