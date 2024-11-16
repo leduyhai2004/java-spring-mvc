@@ -6,9 +6,9 @@
                 <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
                     <div class="row g-4">
                         <div class="col-lg-3">
-                            <a href="https://hoidanit.vn" target="_blank">
+                            <a href="#" target="_blank">
                                 <h1 class="text-primary mb-0">Laptopshop</h1>
-                                <p class="text-secondary mb-0">@duyha@gmail.com</p>
+                                <p class="text-secondary mb-0">duyha@gmail.com</p>
                             </a>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        <span class="text-light"><a href="https://hoidanit.vn" target="_blank"><i
+                        <span class="text-light"><a href="#" target="_blank"><i
                                     class="fas fa-copyright text-light me-2"></i>Lê Duy Hải</a>, All right
                             reserved.</span>
                     </div>

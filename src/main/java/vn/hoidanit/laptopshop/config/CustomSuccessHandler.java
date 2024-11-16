@@ -33,7 +33,7 @@ public class CustomSuccessHandler implements AuthenticationSuccessHandler {
 
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
-            String authorityName = grantedAuthority.getAuthority();
+            String authorityName = grantedAuthority.getAuthority(); // lay ra tung role cua nguoi dung vi 1 nguoi dung co the co nhieu role
             if(roleTargetUrlMap.containsKey(authorityName)) {
                 return roleTargetUrlMap.get(authorityName);
             }
