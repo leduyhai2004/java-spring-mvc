@@ -1,4 +1,4 @@
-package vn.hoidanit.laptopshop.service.validator;
+package vn.duyhai.laptopshop.service.validator;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
